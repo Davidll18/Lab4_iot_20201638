@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_leagues"
+        android:title="Ligas" />
+    <item
+        android:id="@+id/navigation_positions"
+        android:title="Posiciones" />
+    <item
+        android:id="@+id/navigation_results"
+        android:title="Resultados" />
+</menu>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#00ADEF">
+
+    <!-- Campo de Búsqueda -->
+    <EditText
+        android:id="@+id/search_by_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Buscar por País"
+        android:background="@drawable/search_box_bg" />
+
+    <!-- Botón Buscar -->
+    <Button
+        android:id="@+id/btn_search_leagues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buscar"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- RecyclerView para mostrar la lista de ligas -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_leagues"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+    </LinearLayout>
+</LinearLayout>
