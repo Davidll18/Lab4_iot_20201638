@@ -11,11 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.lab4_20201638.adapters.PositionsAdapter;
+import com.example.lab4_20201638.model.TeamPosition;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +34,8 @@ public class PositionsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PositionsAdapter adapter;
-    private List<String> positionsList;
+    private EditText leagueIdInput, seasonInput;
+    private Button searchButton;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,18 +81,53 @@ public class PositionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_positions, container, false);
+
         recyclerView = view.findViewById(R.id.recycler_view_positions);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Inicializar la lista de posiciones
-        positionsList = new ArrayList<>();
-        // Aquí puedes agregar datos de ejemplo o cargarlos desde una API
-        positionsList.add("Equipo A - 1°");
-        positionsList.add("Equipo B - 2°");
-        positionsList.add("Equipo C - 3°");
+        leagueIdInput = view.findViewById(R.id.league_id);
+        seasonInput = view.findViewById(R.id.season);
+        searchButton = view.findViewById(R.id.btn_search_positions);
 
-        adapter = new PositionsAdapter(positionsList);
-        recyclerView.setAdapter(adapter);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String leagueId = leagueIdInput.getText().toString();
+                String season = seasonInput.getText().toString();
+
+                if (leagueId.isEmpty() || season.isEmpty()) {
+                    Toast.makeText(getContext(), "Por favor ingrese todos los campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    fetchLeagueTable(leagueId, season);
+                }
+            }
+        });
+
         return view;
+    }
+
+    private void fetchLeagueTable(String leagueId, String season) {
+        // Utilizamos RetrofitClient para obtener la instancia de Retrofit
+        PositionsApi positionsApi = RetrofitClient.getRetrofitInstance().create(PositionsApi.class);
+
+        // Realizamos la llamada a la API
+        Call<PositionsApi.LeagueTableResponse> call = positionsApi.getLeagueTable(leagueId, season);
+        call.enqueue(new Callback<PositionsApi.LeagueTableResponse>() {
+            @Override
+            public void onResponse(Call<PositionsApi.LeagueTableResponse> call, Response<PositionsApi.LeagueTableResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<TeamPosition> teamPositions = response.body().table;
+                    adapter = new PositionsAdapter(teamPositions);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PositionsApi.LeagueTableResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Error en la conexión", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
