@@ -4,25 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class League {
 
-    @SerializedName("idLeague")
-    private String idLeague; // ID de la liga
-
-    @SerializedName("strLeague")
-    private String name; // Nombre de la liga
-
-    @SerializedName("strAlternate1")
-    private String alternateName1; // Nombre alternativo 1 (si existe)
-
-    @SerializedName("strAlternate2")
-    private String alternateName2; // Nombre alternativo 2 (si existe)
-
-    // Constructor
-    public League(String idLeague, String name, String alternateName1, String alternateName2) {
-        this.idLeague = idLeague;
-        this.name = name;
-        this.alternateName1 = alternateName1;
-        this.alternateName2 = alternateName2;
-    }
+    private String idLeague;
+    private String strLeague;
+    private String strSport;
+    private String strLeagueAlternate;
 
     // Getters y Setters
     public String getIdLeague() {
@@ -33,28 +18,28 @@ public class League {
         this.idLeague = idLeague;
     }
 
-    public String getName() {
-        return name;
+    public String getStrLeague() {
+        return strLeague;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStrLeague(String strLeague) {
+        this.strLeague = strLeague;
     }
 
-    public String getAlternateName1() {
-        return alternateName1;
+    public String getStrSport() {
+        return strSport;
     }
 
-    public void setAlternateName1(String alternateName1) {
-        this.alternateName1 = alternateName1;
+    public void setStrSport(String strSport) {
+        this.strSport = strSport;
     }
 
-    public String getAlternateName2() {
-        return alternateName2;
+    public String getStrLeagueAlternate() {
+        return strLeagueAlternate;
     }
 
-    public void setAlternateName2(String alternateName2) {
-        this.alternateName2 = alternateName2;
+    public void setStrLeagueAlternate(String strLeagueAlternate) {
+        this.strLeagueAlternate = strLeagueAlternate;
     }
 }
 

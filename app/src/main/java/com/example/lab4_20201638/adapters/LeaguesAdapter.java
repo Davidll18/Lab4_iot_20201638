@@ -1,5 +1,6 @@
 package com.example.lab4_20201638.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,13 @@ import java.util.List;
 
 public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeagueViewHolder> {
     private List<League> leaguesList;
+    private Context context;
 
-    public LeaguesAdapter(List<League> leaguesList) {
+    public LeaguesAdapter(List<League> leaguesList, Context context) {
         this.leaguesList = leaguesList;
+        this.context = context;
     }
+
 
     @NonNull
     @Override
@@ -30,7 +34,8 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeagueVi
     @Override
     public void onBindViewHolder(@NonNull LeagueViewHolder holder, int position) {
         League league = leaguesList.get(position);
-        holder.textViewLeagueName.setText(league.getName());
+        holder.textViewLeagueName.setText(league.getStrLeague());
+        holder.textViewCountry.setText(league.getIdLeague());
     }
 
     @Override
